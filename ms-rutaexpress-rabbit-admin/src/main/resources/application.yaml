@@ -1,3 +1,16 @@
+server:
+  port: 8085
+
 spring:
   application:
     name: ms-rutaexpress-rabbit-admin
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: /
+
+logging:
+  file:
+    name: logs/rabbit-admin.log
