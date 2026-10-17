@@ -3,6 +3,7 @@ package ms_rutaexpress_rabbitadmin;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+// Microservicio de administración de RabbitMQ (colas, exchanges y bindings por REST)
 @SpringBootApplication
 public class MsRutaexpressRabbitAdminApplication {
 

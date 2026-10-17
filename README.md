@@ -63,6 +63,6 @@ Si RabbitMQ no está disponible → **503**.
 | Paso | Descripción | Estado |
 |---|---|---|
 | E1 | Base del proyecto, configuración y README | ✅ |
-| E2 | Colas: crear, consultar, eliminar, purgar | ⏳ |
-| E3 | Exchanges y bindings | ⏳ |
-| E4 | Validación y manejo de errores | ⏳ |
+| E2 | Colas: crear, consultar, eliminar, purgar | ✅ |
+| E3 | Exchanges y bindings | ✅ |
+| E4 | Validación y manejo de errores | ✅ |
