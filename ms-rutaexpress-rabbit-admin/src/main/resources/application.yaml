@@ -4,12 +4,12 @@ server:
 spring:
   application:
     name: ms-rutaexpress-rabbit-admin
+  # Clúster: nodos separados por coma (ej: 10.0.1.20:5672,10.0.1.20:5673)
   rabbitmq:
-    host: ${RABBITMQ_HOST:localhost}
-    port: ${RABBITMQ_PORT:5672}
+    addresses: ${RABBITMQ_ADDRESSES:localhost:5672}
     username: ${RABBITMQ_USER:guest}
     password: ${RABBITMQ_PASSWORD:guest}
-    virtual-host: /
+    virtual-host: ${RABBITMQ_VHOST:/}
 
 logging:
   file:
