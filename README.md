@@ -1,7 +1,7 @@
 # ms-rutaexpress-rabbit-admin
 
-Microservicio de **administración de RabbitMQ** del caso RutaExpress 
-Permite crear, consultar, purgar y eliminar **colas, exchanges y bindings** en tiempo de ejecución mediante endpoints REST, usando `RabbitAdmin` de Spring AMQP 
+Microservicio de **administración de RabbitMQ** del caso RutaExpress (DSY1107 Cloud Native I).
+Permite crear, consultar, purgar y eliminar **colas, exchanges y bindings** en tiempo de ejecución mediante endpoints REST, usando `RabbitAdmin` de Spring AMQP (Guía 2.3.1).
 
 ## Tecnologías
 - Java 21 · Spring Boot 4.1.1 · Spring AMQP (`RabbitAdmin`) · Bean Validation · Lombok
@@ -22,9 +22,14 @@ ms-rutaexpress-rabbit-admin/src/main/java/ms_rutaexpress_rabbitadmin/
     ├── config/       RabbitAdminConfig       ← beans RabbitAdmin y RabbitTemplate
     └── adapter/
         ├── in/rest/  QueueController, ExchangeController, BindingController,
-        │             GlobalExceptionHandler, dto/, validation/ValidationRules
+        │             exception/GlobalExceptionHandler (HTTP 400/404/409/503),
+        │             dto/, validation/ValidationRules
         └── out/rabbit/ RabbitBrokerAdapter   ← aquí se usa RabbitAdmin
 ```
+
+## Ejecución
+- Docker: `docker build -t ms-rabbit-admin .` dentro de `ms-rutaexpress-rabbit-admin/` (puerto 8085).
+- CI: `.github/workflows/ci.yml` compila, corre los tests y construye la imagen en cada PR.
 
 ## Ejecución local
 1. Levantar RabbitMQ: `docker compose -f docker-compose.infra.yml up -d`
@@ -32,12 +37,11 @@ ms-rutaexpress-rabbit-admin/src/main/java/ms_rutaexpress_rabbitadmin/
 3. API en `http://localhost:8085/api/rabbitmq`
 
 ## Variables de entorno
-| Variable | Por defecto |
-|---|---|
-| `RABBITMQ_HOST` | localhost |
-| `RABBITMQ_PORT` | 5672 |
-| `RABBITMQ_USER` | guest |
-| `RABBITMQ_PASSWORD` | guest |
+| Variable | Por defecto | En la nube |
+|---|---|---|
+| `RABBITMQ_ADDRESSES` | `localhost:5672` | los 2 nodos del clúster (IP privada de ec2-mq:5672,5673) |
+| `RABBITMQ_USER` / `RABBITMQ_PASSWORD` | `guest` / `guest` | `rx-ops` |
+| `RABBITMQ_VHOST` | `/` | `rutaexpress` |
 
 ## Endpoints (`/api/rabbitmq`)
 | Método | Ruta | Parámetros | Respuesta |
@@ -66,3 +70,4 @@ Si RabbitMQ no está disponible → **503**.
 | E2 | Colas: crear, consultar, eliminar, purgar | ✅ |
 | E3 | Exchanges y bindings | ✅ |
 | E4 | Validación y manejo de errores | ✅ |
+| F1 | Configuración por variables de entorno (clúster, usuario, vhost), Dockerfile y CI | ✅ |
